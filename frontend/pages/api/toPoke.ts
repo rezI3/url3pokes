@@ -43,7 +43,10 @@ const handler = async (
     );
     // 上のfetchでの呼び出し結果が完了するまで、awaitで待機する
     const data = await res.json();
-    const names = data.names;
+    const names = data.names as {
+      language: { name: string; url: string };
+      name: string;
+    }[];
 
     const result = names.find((element) => element.language.name === "ja");
     const name = result.name;
