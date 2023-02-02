@@ -1,7 +1,7 @@
 import { NextApiResponse } from "next";
 import { NextApiRequest } from "next";
 import { PrismaClient } from "@prisma/client";
-import { Numbers } from "@mui/icons-material";
+import { ErrorOutlineSharp, Numbers } from "@mui/icons-material";
 
 const prisma = new PrismaClient({
   log: ["query", "error", "info", "warn"],
@@ -38,20 +38,24 @@ const handler = async (
   for (const [key, value] of Object.entries(pokeNumbers)) {
     const pokeNumber: number = value;
 
-    const res = await fetch(
+    const result = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${pokeNumber}`
     );
     // 上のfetchでの呼び出し結果が完了するまで、awaitで待機する
-    const data = await res.json();
+    const data = await result.json();
     const names = data.names as {
       language: { name: string; url: string };
       name: string;
     }[];
 
-    const result = names.find((element) => element.language.name === "ja");
-    const name = result.name;
+    const nameObj = names.find((element) => element.language.name === "ja");
 
-    pokes[key] = name;
+    if (nameObj) {
+      const name = nameObj.name;
+      pokes[key as keyof Pokes] = name as string;
+    } else {
+      res.status(400).end()
+    }
   }
 
   // URLとポケモン3匹をDBに保存する処理
