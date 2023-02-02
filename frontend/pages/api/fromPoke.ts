@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { resourceUsage } from "process";
 
 const prisma = new PrismaClient({
   log: ["query", "error", "info", "warn"],
@@ -26,22 +27,22 @@ const handler = async (
     return { url: null };
   }
 
-  const res = await prisma.url3pokes.findFirst({
+  const result = await prisma.url3pokes.findFirst({
     where: {
       first: first,
       second: second,
       third: third,
     },
   });
-  console.log(res.url);
+  console.log(result.url);
 
-  if (res === null) {
+  if (result === null) {
     res.status(404);
     res.end(JSON.stringify({ url: null }));
   }
 
   res.status(200);
-  res.end(JSON.stringify({ url: res.url }));
+  res.end(JSON.stringify({ url: result.url }));
 };
 
 export default handler;
