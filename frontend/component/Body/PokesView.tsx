@@ -8,9 +8,9 @@ const PokesView: React.FC<{ pokes: Pokes }> = (props) => {
   const { first, second, third } = props.pokes;
   return (
     <div>
-      <>{first}</>
-      <>{second}</>
-      <>{third}</>
+      <div>{first}</div>
+      <div>{second}</div>
+      <div>{third}</div>
     </div>
   );
 };

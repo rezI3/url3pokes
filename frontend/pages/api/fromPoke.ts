@@ -26,22 +26,22 @@ const handler = async (
     return { url: null };
   }
 
-  const result = await prisma.url3pokes.findFirst({
+  const res = await prisma.url3pokes.findFirst({
     where: {
       first: first,
       second: second,
       third: third,
     },
   });
-  console.log(result.url);
+  console.log(res.url);
 
-  if (result === null) {
+  if (res === null) {
     res.status(404);
     res.end(JSON.stringify({ url: null }));
   }
 
   res.status(200);
-  res.end(JSON.stringify({ url: result.url }));
+  res.end(JSON.stringify({ url: res.url }));
 };
 
 export default handler;

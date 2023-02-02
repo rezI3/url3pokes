@@ -19,21 +19,21 @@ const ToPoke = () => {
   };
 
   const handleClick = async () => {
-    const result = await fetch("/api/toPoke", {
+    const res = await fetch("/api/toPoke", {
       method: "POST",
       body: JSON.stringify({
         url: url,
       }),
     });
 
-    const data = await result.json();
+    const data = await res.json();
 
     // TODO:APIを叩いて、ポケモンの画像を表示する処理
     setPokes(data.pokes);
   };
 
   return (
-    <div>
+    <div style={{display: "flex"}}>
       <TextField
         id="url"
         variant="outlined"
