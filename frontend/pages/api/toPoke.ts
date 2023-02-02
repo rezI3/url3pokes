@@ -51,10 +51,18 @@ const handler = async (
     pokes[key] = name;
   }
 
-  // TODO: URLとポケモン3匹をDBに保存する処理
+  // URLとポケモン3匹をDBに保存する処理
+  await prisma.url3pokes.create({
+    data: {
+      url: url,
+      first: pokes.first,
+      second: pokes.second,
+      third: pokes.third,
+    },
+  });
 
   res.status(200);
-  res.end(JSON.stringify({pokes: pokes}))
+  res.end(JSON.stringify({ pokes: pokes }));
 };
 
 const toNumbers = (url: string): PokeNumbers => {
