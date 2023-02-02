@@ -4,14 +4,14 @@
 generator client {
   provider        = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.1.x"]
-  // previewFeatures = ["referentialIntegrity"] //　planet scale特有
+  previewFeatures = ["referentialIntegrity"] //　planet scale特有
 }
 
 datasource db {
-  provider             = "postgres"
+  provider             = "mysql"
   url                  = env("DATABASE_URL")
-  relationMode = "prisma"
-  // referentialIntegrity = "prisma" // planeScale特有
+  // relationMode = "prisma"
+  referentialIntegrity = "prisma" // planeScale特有
 }
 
 model url3pokes {
