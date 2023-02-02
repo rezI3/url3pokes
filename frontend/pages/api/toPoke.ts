@@ -36,7 +36,7 @@ const handler = async (
 
   // APIを叩いて、図鑑番号からポケモン名に変換する処理
   for (const [key, value] of Object.entries(pokeNumbers)) {
-    const pokeNumber: number = pokeNumbers[key];
+    const pokeNumber: number = value;
 
     const res = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${pokeNumber}`
