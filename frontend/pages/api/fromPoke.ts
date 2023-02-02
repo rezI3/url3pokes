@@ -22,7 +22,7 @@ const handler = async (
 ) => {
   const { first, second, third }: Pokes = JSON.parse(req.body);
 
-  console.log(first)
+  console.log(first);
 
   if (first === "" || second === "" || third === "") {
     res.status(404);
@@ -38,15 +38,14 @@ const handler = async (
       third: third,
     },
   });
-  console.log(result.url);
 
-  if (result === null) {
+  if (result) {
+    res.status(200);
+    res.end(JSON.stringify({ url: result.url }));
+  } else {
     res.status(404);
     res.end(JSON.stringify({ url: null }));
   }
-
-  res.status(200);
-  res.end(JSON.stringify({ url: result.url }));
 };
 
 export default handler;
