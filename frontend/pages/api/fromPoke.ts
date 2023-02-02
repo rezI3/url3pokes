@@ -20,12 +20,16 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<RetValue | RetValue>
 ) => {
-  const { first, second, third }: Pokes = req.body;
+  const { first, second, third }: Pokes = JSON.parse(req.body);
+
+  console.log(first)
 
   if (first === "" || second === "" || third === "") {
     res.status(404);
     return { url: null };
   }
+
+  console.log(first);
 
   const result = await prisma.url3pokes.findFirst({
     where: {
