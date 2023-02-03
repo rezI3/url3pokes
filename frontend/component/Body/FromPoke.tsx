@@ -3,6 +3,7 @@ import { Button, InputAdornment, TextField } from "@material-ui/core";
 import { useState } from "react";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import URLView from "./URLView";
+import { css } from "@emotion/react";
 
 type Pokes = {
   first: string;
@@ -11,7 +12,11 @@ type Pokes = {
 };
 
 const FromPoke = () => {
-  const [pokes, setPokes] = useState<Pokes>({ first: "", second: "", third: "" });
+  const [pokes, setPokes] = useState<Pokes>({
+    first: "",
+    second: "",
+    third: "",
+  });
   const [url, setUrl] = useState<string>("");
 
   const handleChange = (value: string, key: string) => {
@@ -23,8 +28,7 @@ const FromPoke = () => {
   const handleClick = async () => {
     // TODO: APIをを叩いて画像を表示する処理
 
-
-    console.log("click!!")
+    console.log("click!!");
 
     const { first, second, third } = pokes;
 
@@ -41,17 +45,17 @@ const FromPoke = () => {
     const data = await result.json();
 
     if (data.url === null) {
-      setUrl("urlが存在してなかったよ")
+      setUrl("urlが存在してなかったよ");
       console.log("error");
     } else {
       setUrl(data.url);
-      console.log(data.url)
+      console.log(data.url);
     }
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
+    <div css={styles.container}>
+      <div css={styles.textContainer}>
         <TextField
           id="firstPoke"
           variant="outlined"
@@ -89,12 +93,48 @@ const FromPoke = () => {
           }}
         />
       </div>
-      <Button variant="contained" onClick={handleClick}>
-        urlゲットだぜ
-      </Button>
-      <URLView url={url} />
+      <div css={styles.subContainer}>
+        <Button
+          variant="contained"
+          onClick={handleClick}
+          css={styles.button}
+          color="primary"
+        >
+          urlゲットだぜ
+        </Button>
+      </div>
+      <div css={styles.subContainer}>
+        <URLView url={url} />
+      </div>
     </div>
   );
+};
+
+const styles = {
+  container: css`
+    display: flex;
+    justify-content: space-between;
+  `,
+  textContainer: css`
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    height: 40vh;
+    padding-top: 1vh;
+    justify-content: space-between;
+    margin-top: 3vh;
+  `,
+  subContainer: css`
+    height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `,
+  button: css`
+    height: 10vh;
+    width: 15vw;
+    margin-top: 100vh;
+  `,
 };
 
 export default FromPoke;

@@ -8,9 +8,14 @@ const prisma = new PrismaClient({
 });
 
 type Pokes = {
-  first: string;
-  second: string;
-  third: string;
+  first: Poke;
+  second: Poke;
+  third: Poke;
+};
+
+type Poke = {
+  name: string;
+  imgUrl: string;
 };
 
 type PokeNumbers = {
@@ -32,7 +37,11 @@ const handler = async (
 
   // 文字列を図鑑番号3つに変換する処理
   const pokeNumbers: PokeNumbers = toNumbers(url);
-  const pokes: Pokes = { first: "", second: "", third: "" };
+  const pokes: Pokes = {
+    first: { name: "", imgUrl: "" },
+    second: { name: "", imgUrl: "" },
+    third: { name: "", imgUrl: "" },
+  };
 
   // APIを叩いて、図鑑番号からポケモン名に変換する処理
   for (const [key, value] of Object.entries(pokeNumbers)) {
@@ -52,9 +61,12 @@ const handler = async (
 
     if (nameObj) {
       const name = nameObj.name;
-      pokes[key as keyof Pokes] = name as string;
+      pokes[key as keyof Pokes] = {
+        name: name as string,
+        imgUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeNumber}.png`,
+      };
     } else {
-      res.status(400).end()
+      res.status(400).end();
     }
   }
 
@@ -62,9 +74,9 @@ const handler = async (
   await prisma.url3pokes.create({
     data: {
       url: url,
-      first: pokes.first,
-      second: pokes.second,
-      third: pokes.third,
+      first: pokes.first.name,
+      second: pokes.second.name,
+      third: pokes.third.name,
     },
   });
 

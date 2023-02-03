@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Button from '@mui/material/Button';
 
 type Props = {
   url: string,
@@ -15,9 +15,9 @@ const URLView = (props: Props) => {
       ) : url === "urlが存在してなかったよ" ? (
         <div>urlが紐づけられていません</div>
       ) : (
-        <Link href={url} target="_blank">
-          {url}
-        </Link>
+        <Button href={url} target="_blank" variant="contained" color="primary">
+          "URLに飛ぶ"
+        </Button>
       )}
     </div>
   );

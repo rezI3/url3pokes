@@ -1,18 +1,29 @@
+import PokesViewItem from "./PokesViewItem";
+
 type Pokes = {
-  first: string;
-  second: string;
-  third: string;
+  first: Poke;
+  second: Poke;
+  third: Poke;
+};
+
+type Poke = {
+  name: string;
+  imgUrl: string;
 };
 
 const PokesView: React.FC<{ pokes: Pokes }> = (props) => {
   const { first, second, third } = props.pokes;
   return (
     <div>
-      <div>{first}</div>
-      <div>{second}</div>
-      <div>{third}</div>
+      <PokesViewItem {...first}/>
+      <PokesViewItem {...second}/>
+      <PokesViewItem {...third}/>
     </div>
   );
 };
+
+const css = {
+
+}
 
 export default PokesView;
